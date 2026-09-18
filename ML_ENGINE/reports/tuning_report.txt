@@ -1,0 +1,409 @@
+========================================================================
+  CODE CORTEX 3.0  -  STEP 7 : HYPERPARAMETER TUNING
+  Started : 2026-09-18 11:51:22
+========================================================================
+
+------------------------------------------------------------------------
+  LOAD  -  Reading train/val artifacts  (test set NEVER touched)
+------------------------------------------------------------------------
+  X_train : 73,212 rows  x  47 features
+  X_val   : 15,688 rows  x  47 features
+  y_train : 44,290 malware  |  28,922 legit
+  y_val   : 9,490 malware  |  6,198 legit
+  FPR constraint : < 1.5%   (primary objective = min FNR)
+  Loaded Step 6 baselines: ['LogisticRegression', 'RandomForest', 'XGBoost']
+
+------------------------------------------------------------------------
+  XGBoost Grid Search  (user-specified parameter space)
+------------------------------------------------------------------------
+  Total XGBoost combinations : 108
+  Fixed: n_estimators=500, lr=0.05, reg_alpha=0.1, reg_lambda=1.5
+
+  [001/108]  depth=4 mcw=1 ss=0.7 spw=1.5  |  FNR=0.791%  FPR=0.811%  AUC=0.99947  [OK]
+  [002/108]  depth=4 mcw=1 ss=0.7 spw=2.0  |  FNR=0.613%  FPR=0.959%  AUC=0.99947  [OK]
+  [003/108]  depth=4 mcw=1 ss=0.7 spw=2.5  |  FNR=0.500%  FPR=0.980%  AUC=0.99948  [OK]
+  [004/108]  depth=4 mcw=1 ss=0.7 spw=3.0  |  FNR=0.468%  FPR=1.096%  AUC=0.99948  [OK]
+  [005/108]  depth=4 mcw=1 ss=0.8 spw=1.5  |  FNR=0.774%  FPR=0.822%  AUC=0.99946  [OK]
+  [006/108]  depth=4 mcw=1 ss=0.8 spw=2.0  |  FNR=0.516%  FPR=0.927%  AUC=0.99949  [OK]
+  [007/108]  depth=4 mcw=1 ss=0.8 spw=2.5  |  FNR=0.500%  FPR=1.001%  AUC=0.99950  [OK]
+  [008/108]  depth=4 mcw=1 ss=0.8 spw=3.0  |  FNR=0.452%  FPR=1.096%  AUC=0.99948  [OK]
+  [009/108]  depth=4 mcw=1 ss=0.9 spw=1.5  |  FNR=0.774%  FPR=0.843%  AUC=0.99949  [OK]
+  [010/108]  depth=4 mcw=1 ss=0.9 spw=2.0  |  FNR=0.565%  FPR=0.906%  AUC=0.99949  [OK]
+  [011/108]  depth=4 mcw=1 ss=0.9 spw=2.5  |  FNR=0.565%  FPR=1.054%  AUC=0.99949  [OK]
+  [012/108]  depth=4 mcw=1 ss=0.9 spw=3.0  |  FNR=0.452%  FPR=1.075%  AUC=0.99948  [OK]
+  [013/108]  depth=4 mcw=3 ss=0.7 spw=1.5  |  FNR=0.758%  FPR=0.885%  AUC=0.99948  [OK]
+  [014/108]  depth=4 mcw=3 ss=0.7 spw=2.0  |  FNR=0.581%  FPR=0.927%  AUC=0.99947  [OK]
+  [015/108]  depth=4 mcw=3 ss=0.7 spw=2.5  |  FNR=0.565%  FPR=1.012%  AUC=0.99947  [OK]
+  [016/108]  depth=4 mcw=3 ss=0.7 spw=3.0  |  FNR=0.452%  FPR=1.106%  AUC=0.99948  [OK]
+  [017/108]  depth=4 mcw=3 ss=0.8 spw=1.5  |  FNR=0.726%  FPR=0.832%  AUC=0.99944  [OK]
+  [018/108]  depth=4 mcw=3 ss=0.8 spw=2.0  |  FNR=0.532%  FPR=0.938%  AUC=0.99944  [OK]
+  [019/108]  depth=4 mcw=3 ss=0.8 spw=2.5  |  FNR=0.516%  FPR=1.043%  AUC=0.99947  [OK]
+  [020/108]  depth=4 mcw=3 ss=0.8 spw=3.0  |  FNR=0.419%  FPR=1.064%  AUC=0.99948  [OK]
+  [021/108]  depth=4 mcw=3 ss=0.9 spw=1.5  |  FNR=0.726%  FPR=0.832%  AUC=0.99949  [OK]
+  [022/108]  depth=4 mcw=3 ss=0.9 spw=2.0  |  FNR=0.597%  FPR=0.938%  AUC=0.99948  [OK]
+  [023/108]  depth=4 mcw=3 ss=0.9 spw=2.5  |  FNR=0.549%  FPR=1.075%  AUC=0.99947  [OK]
+  [024/108]  depth=4 mcw=3 ss=0.9 spw=3.0  |  FNR=0.468%  FPR=1.106%  AUC=0.99946  [OK]
+  [025/108]  depth=4 mcw=5 ss=0.7 spw=1.5  |  FNR=0.774%  FPR=0.875%  AUC=0.99945  [OK]
+  [026/108]  depth=4 mcw=5 ss=0.7 spw=2.0  |  FNR=0.565%  FPR=0.959%  AUC=0.99946  [OK]
+  [027/108]  depth=4 mcw=5 ss=0.7 spw=2.5  |  FNR=0.500%  FPR=1.043%  AUC=0.99946  [OK]
+  [028/108]  depth=4 mcw=5 ss=0.7 spw=3.0  |  FNR=0.436%  FPR=1.117%  AUC=0.99947  [OK]
+  [029/108]  depth=4 mcw=5 ss=0.8 spw=1.5  |  FNR=0.774%  FPR=0.843%  AUC=0.99944  [OK]
+  [030/108]  depth=4 mcw=5 ss=0.8 spw=2.0  |  FNR=0.532%  FPR=0.927%  AUC=0.99946  [OK]
+  [031/108]  depth=4 mcw=5 ss=0.8 spw=2.5  |  FNR=0.484%  FPR=1.054%  AUC=0.99945  [OK]
+  [032/108]  depth=4 mcw=5 ss=0.8 spw=3.0  |  FNR=0.516%  FPR=1.128%  AUC=0.99946  [OK]
+  [033/108]  depth=4 mcw=5 ss=0.9 spw=1.5  |  FNR=0.758%  FPR=0.854%  AUC=0.99944  [OK]
+  [034/108]  depth=4 mcw=5 ss=0.9 spw=2.0  |  FNR=0.565%  FPR=0.959%  AUC=0.99945  [OK]
+  [035/108]  depth=4 mcw=5 ss=0.9 spw=2.5  |  FNR=0.468%  FPR=1.075%  AUC=0.99948  [OK]
+  [036/108]  depth=4 mcw=5 ss=0.9 spw=3.0  |  FNR=0.500%  FPR=1.075%  AUC=0.99949  [OK]
+  [037/108]  depth=5 mcw=1 ss=0.7 spw=1.5  |  FNR=0.726%  FPR=0.738%  AUC=0.99952  [OK]
+  [038/108]  depth=5 mcw=1 ss=0.7 spw=2.0  |  FNR=0.565%  FPR=0.811%  AUC=0.99952  [OK]
+  [039/108]  depth=5 mcw=1 ss=0.7 spw=2.5  |  FNR=0.565%  FPR=0.822%  AUC=0.99952  [OK]
+  [040/108]  depth=5 mcw=1 ss=0.7 spw=3.0  |  FNR=0.468%  FPR=0.896%  AUC=0.99952  [OK]
+  [041/108]  depth=5 mcw=1 ss=0.8 spw=1.5  |  FNR=0.726%  FPR=0.748%  AUC=0.99954  [OK]
+  [042/108]  depth=5 mcw=1 ss=0.8 spw=2.0  |  FNR=0.516%  FPR=0.790%  AUC=0.99955  [OK]
+  [043/108]  depth=5 mcw=1 ss=0.8 spw=2.5  |  FNR=0.468%  FPR=0.885%  AUC=0.99953  [OK]
+  [044/108]  depth=5 mcw=1 ss=0.8 spw=3.0  |  FNR=0.436%  FPR=0.885%  AUC=0.99952  [OK]
+  [045/108]  depth=5 mcw=1 ss=0.9 spw=1.5  |  FNR=0.629%  FPR=0.790%  AUC=0.99951  [OK]
+  [046/108]  depth=5 mcw=1 ss=0.9 spw=2.0  |  FNR=0.484%  FPR=0.843%  AUC=0.99951  [OK]
+  [047/108]  depth=5 mcw=1 ss=0.9 spw=2.5  |  FNR=0.500%  FPR=0.843%  AUC=0.99950  [OK]
+  [048/108]  depth=5 mcw=1 ss=0.9 spw=3.0  |  FNR=0.452%  FPR=0.896%  AUC=0.99954  [OK]
+  [049/108]  depth=5 mcw=3 ss=0.7 spw=1.5  |  FNR=0.678%  FPR=0.843%  AUC=0.99952  [OK]
+  [050/108]  depth=5 mcw=3 ss=0.7 spw=2.0  |  FNR=0.597%  FPR=0.843%  AUC=0.99954  [OK]
+  [051/108]  depth=5 mcw=3 ss=0.7 spw=2.5  |  FNR=0.516%  FPR=0.927%  AUC=0.99952  [OK]
+  [052/108]  depth=5 mcw=3 ss=0.7 spw=3.0  |  FNR=0.436%  FPR=0.927%  AUC=0.99953  [OK]
+  [053/108]  depth=5 mcw=3 ss=0.8 spw=1.5  |  FNR=0.581%  FPR=0.769%  AUC=0.99953  [OK]
+  [054/108]  depth=5 mcw=3 ss=0.8 spw=2.0  |  FNR=0.500%  FPR=0.854%  AUC=0.99955  [OK]
+  [055/108]  depth=5 mcw=3 ss=0.8 spw=2.5  |  FNR=0.484%  FPR=0.938%  AUC=0.99955  [OK]
+  [056/108]  depth=5 mcw=3 ss=0.8 spw=3.0  |  FNR=0.484%  FPR=0.927%  AUC=0.99954  [OK]
+  [057/108]  depth=5 mcw=3 ss=0.9 spw=1.5  |  FNR=0.613%  FPR=0.790%  AUC=0.99952  [OK]
+  [058/108]  depth=5 mcw=3 ss=0.9 spw=2.0  |  FNR=0.452%  FPR=0.854%  AUC=0.99952  [OK]
+  [059/108]  depth=5 mcw=3 ss=0.9 spw=2.5  |  FNR=0.452%  FPR=0.843%  AUC=0.99954  [OK]
+  [060/108]  depth=5 mcw=3 ss=0.9 spw=3.0  |  FNR=0.419%  FPR=0.927%  AUC=0.99953  [OK]
+  [061/108]  depth=5 mcw=5 ss=0.7 spw=1.5  |  FNR=0.662%  FPR=0.790%  AUC=0.99952  [OK]
+  [062/108]  depth=5 mcw=5 ss=0.7 spw=2.0  |  FNR=0.565%  FPR=0.854%  AUC=0.99951  [OK]
+  [063/108]  depth=5 mcw=5 ss=0.7 spw=2.5  |  FNR=0.532%  FPR=0.959%  AUC=0.99951  [OK]
+  [064/108]  depth=5 mcw=5 ss=0.7 spw=3.0  |  FNR=0.452%  FPR=0.991%  AUC=0.99952  [OK]
+  [065/108]  depth=5 mcw=5 ss=0.8 spw=1.5  |  FNR=0.629%  FPR=0.811%  AUC=0.99953  [OK]
+  [066/108]  depth=5 mcw=5 ss=0.8 spw=2.0  |  FNR=0.581%  FPR=0.822%  AUC=0.99951  [OK]
+  [067/108]  depth=5 mcw=5 ss=0.8 spw=2.5  |  FNR=0.452%  FPR=0.906%  AUC=0.99952  [OK]
+  [068/108]  depth=5 mcw=5 ss=0.8 spw=3.0  |  FNR=0.419%  FPR=0.938%  AUC=0.99951  [OK]
+  [069/108]  depth=5 mcw=5 ss=0.9 spw=1.5  |  FNR=0.710%  FPR=0.790%  AUC=0.99953  [OK]
+  [070/108]  depth=5 mcw=5 ss=0.9 spw=2.0  |  FNR=0.532%  FPR=0.875%  AUC=0.99952  [OK]
+  [071/108]  depth=5 mcw=5 ss=0.9 spw=2.5  |  FNR=0.484%  FPR=0.906%  AUC=0.99951  [OK]
+  [072/108]  depth=5 mcw=5 ss=0.9 spw=3.0  |  FNR=0.452%  FPR=0.959%  AUC=0.99950  [OK]
+  [073/108]  depth=6 mcw=1 ss=0.7 spw=1.5  |  FNR=0.662%  FPR=0.674%  AUC=0.99954  [OK]
+  [074/108]  depth=6 mcw=1 ss=0.7 spw=2.0  |  FNR=0.629%  FPR=0.748%  AUC=0.99954  [OK]
+  [075/108]  depth=6 mcw=1 ss=0.7 spw=2.5  |  FNR=0.484%  FPR=0.759%  AUC=0.99952  [OK]
+  [076/108]  depth=6 mcw=1 ss=0.7 spw=3.0  |  FNR=0.532%  FPR=0.780%  AUC=0.99955  [OK]
+  [077/108]  depth=6 mcw=1 ss=0.8 spw=1.5  |  FNR=0.678%  FPR=0.727%  AUC=0.99952  [OK]
+  [078/108]  depth=6 mcw=1 ss=0.8 spw=2.0  |  FNR=0.532%  FPR=0.727%  AUC=0.99954  [OK]
+  [079/108]  depth=6 mcw=1 ss=0.8 spw=2.5  |  FNR=0.565%  FPR=0.769%  AUC=0.99952  [OK]
+  [080/108]  depth=6 mcw=1 ss=0.8 spw=3.0  |  FNR=0.484%  FPR=0.748%  AUC=0.99954  [OK]
+  [081/108]  depth=6 mcw=1 ss=0.9 spw=1.5  |  FNR=0.629%  FPR=0.717%  AUC=0.99953  [OK]
+  [082/108]  depth=6 mcw=1 ss=0.9 spw=2.0  |  FNR=0.532%  FPR=0.727%  AUC=0.99952  [OK]
+  [083/108]  depth=6 mcw=1 ss=0.9 spw=2.5  |  FNR=0.532%  FPR=0.738%  AUC=0.99957  [OK]
+  [084/108]  depth=6 mcw=1 ss=0.9 spw=3.0  |  FNR=0.484%  FPR=0.759%  AUC=0.99956  [OK]
+  [085/108]  depth=6 mcw=3 ss=0.7 spw=1.5  |  FNR=0.645%  FPR=0.717%  AUC=0.99953  [OK]
+  [086/108]  depth=6 mcw=3 ss=0.7 spw=2.0  |  FNR=0.516%  FPR=0.727%  AUC=0.99955  [OK]
+  [087/108]  depth=6 mcw=3 ss=0.7 spw=2.5  |  FNR=0.452%  FPR=0.790%  AUC=0.99953  [OK]
+  [088/108]  depth=6 mcw=3 ss=0.7 spw=3.0  |  FNR=0.468%  FPR=0.822%  AUC=0.99956  [OK]
+  [089/108]  depth=6 mcw=3 ss=0.8 spw=1.5  |  FNR=0.645%  FPR=0.695%  AUC=0.99954  [OK]
+  [090/108]  depth=6 mcw=3 ss=0.8 spw=2.0  |  FNR=0.549%  FPR=0.748%  AUC=0.99953  [OK]
+  [091/108]  depth=6 mcw=3 ss=0.8 spw=2.5  |  FNR=0.516%  FPR=0.780%  AUC=0.99953  [OK]
+  [092/108]  depth=6 mcw=3 ss=0.8 spw=3.0  |  FNR=0.436%  FPR=0.811%  AUC=0.99957  [OK]
+  [093/108]  depth=6 mcw=3 ss=0.9 spw=1.5  |  FNR=0.678%  FPR=0.706%  AUC=0.99953  [OK]
+  [094/108]  depth=6 mcw=3 ss=0.9 spw=2.0  |  FNR=0.532%  FPR=0.759%  AUC=0.99957  [OK]
+  [095/108]  depth=6 mcw=3 ss=0.9 spw=2.5  |  FNR=0.484%  FPR=0.801%  AUC=0.99954  [OK]
+  [096/108]  depth=6 mcw=3 ss=0.9 spw=3.0  |  FNR=0.484%  FPR=0.822%  AUC=0.99955  [OK]
+  [097/108]  depth=6 mcw=5 ss=0.7 spw=1.5  |  FNR=0.581%  FPR=0.738%  AUC=0.99950  [OK]
+  [098/108]  depth=6 mcw=5 ss=0.7 spw=2.0  |  FNR=0.613%  FPR=0.801%  AUC=0.99953  [OK]
+  [099/108]  depth=6 mcw=5 ss=0.7 spw=2.5  |  FNR=0.484%  FPR=0.864%  AUC=0.99954  [OK]
+  [100/108]  depth=6 mcw=5 ss=0.7 spw=3.0  |  FNR=0.468%  FPR=0.885%  AUC=0.99951  [OK]
+  [101/108]  depth=6 mcw=5 ss=0.8 spw=1.5  |  FNR=0.645%  FPR=0.759%  AUC=0.99952  [OK]
+  [102/108]  depth=6 mcw=5 ss=0.8 spw=2.0  |  FNR=0.549%  FPR=0.790%  AUC=0.99954  [OK]
+  [103/108]  depth=6 mcw=5 ss=0.8 spw=2.5  |  FNR=0.532%  FPR=0.843%  AUC=0.99954  [OK]
+  [104/108]  depth=6 mcw=5 ss=0.8 spw=3.0  |  FNR=0.468%  FPR=0.790%  AUC=0.99957  [OK]
+  [105/108]  depth=6 mcw=5 ss=0.9 spw=1.5  |  FNR=0.662%  FPR=0.706%  AUC=0.99952  [OK]
+  [106/108]  depth=6 mcw=5 ss=0.9 spw=2.0  |  FNR=0.613%  FPR=0.738%  AUC=0.99951  [OK]
+  [107/108]  depth=6 mcw=5 ss=0.9 spw=2.5  |  FNR=0.500%  FPR=0.843%  AUC=0.99954  [OK]
+  [108/108]  depth=6 mcw=5 ss=0.9 spw=3.0  |  FNR=0.419%  FPR=0.832%  AUC=0.99954  [OK]
+  
+  XGBoost grid search finished in 271.9s
+    [SAVED] xgb_grid_results.csv  (108 rows)
+  
+  -- XGBoost Best Config ------------------------------------------
+    Params   : {'max_depth': 4, 'min_child_weight': 3, 'subsample': 0.8, 'scale_pos_weight': 3.0}
+    FNR      : 0.419%
+    FPR      : 1.064%
+    ROC-AUC  : 0.999477
+    F1       : 98.982%
+    CM       : TP=6172 TN=9389 FP=101 FN=26
+    [SAVED] tuned_xgb.pkl
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\09_xgb_grid_heatmap.png
+
+------------------------------------------------------------------------
+  LightGBM Flagship  (hard parameter grid)
+------------------------------------------------------------------------
+  LightGBM 4.7.0 available.
+  Total LightGBM combinations : 108
+  Fixed: n_estimators=700, reg_alpha=0.2, reg_lambda=2.0, min_split_gain=0.1
+
+  [001/108]  nl=63 mcs=20 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.674%  AUC=0.99962  [OK]
+  [002/108]  nl=63 mcs=20 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.516%  FPR=0.727%  AUC=0.99963  [OK]
+  [003/108]  nl=63 mcs=20 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.452%  FPR=0.780%  AUC=0.99962  [OK]
+  [004/108]  nl=63 mcs=20 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.674%  AUC=0.99962  [OK]
+  [005/108]  nl=63 mcs=20 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.516%  FPR=0.727%  AUC=0.99963  [OK]
+  [006/108]  nl=63 mcs=20 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.452%  FPR=0.780%  AUC=0.99962  [OK]
+  [007/108]  nl=63 mcs=20 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.748%  AUC=0.99962  [OK]
+  [008/108]  nl=63 mcs=20 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.516%  FPR=0.706%  AUC=0.99962  [OK]
+  [009/108]  nl=63 mcs=20 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.468%  FPR=0.769%  AUC=0.99963  [OK]
+  [010/108]  nl=63 mcs=20 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.748%  AUC=0.99962  [OK]
+  [011/108]  nl=63 mcs=20 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.516%  FPR=0.706%  AUC=0.99962  [OK]
+  [012/108]  nl=63 mcs=20 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.468%  FPR=0.769%  AUC=0.99963  [OK]
+  [013/108]  nl=63 mcs=50 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.581%  FPR=0.674%  AUC=0.99962  [OK]
+  [014/108]  nl=63 mcs=50 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99963  [OK]
+  [015/108]  nl=63 mcs=50 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.484%  FPR=0.811%  AUC=0.99963  [OK]
+  [016/108]  nl=63 mcs=50 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.581%  FPR=0.674%  AUC=0.99962  [OK]
+  [017/108]  nl=63 mcs=50 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99963  [OK]
+  [018/108]  nl=63 mcs=50 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.484%  FPR=0.811%  AUC=0.99963  [OK]
+  [019/108]  nl=63 mcs=50 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.597%  FPR=0.706%  AUC=0.99960  [OK]
+  [020/108]  nl=63 mcs=50 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.597%  FPR=0.727%  AUC=0.99962  [OK]
+  [021/108]  nl=63 mcs=50 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.500%  FPR=0.780%  AUC=0.99961  [OK]
+  [022/108]  nl=63 mcs=50 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.597%  FPR=0.706%  AUC=0.99960  [OK]
+  [023/108]  nl=63 mcs=50 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.597%  FPR=0.727%  AUC=0.99962  [OK]
+  [024/108]  nl=63 mcs=50 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.500%  FPR=0.780%  AUC=0.99961  [OK]
+  [025/108]  nl=63 mcs=100 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.613%  FPR=0.717%  AUC=0.99961  [OK]
+  [026/108]  nl=63 mcs=100 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.532%  FPR=0.695%  AUC=0.99964  [OK]
+  [027/108]  nl=63 mcs=100 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.500%  FPR=0.780%  AUC=0.99961  [OK]
+  [028/108]  nl=63 mcs=100 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.613%  FPR=0.717%  AUC=0.99961  [OK]
+  [029/108]  nl=63 mcs=100 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.532%  FPR=0.695%  AUC=0.99964  [OK]
+  [030/108]  nl=63 mcs=100 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.500%  FPR=0.780%  AUC=0.99961  [OK]
+  [031/108]  nl=63 mcs=100 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.629%  FPR=0.706%  AUC=0.99959  [OK]
+  [032/108]  nl=63 mcs=100 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.581%  FPR=0.674%  AUC=0.99963  [OK]
+  [033/108]  nl=63 mcs=100 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.468%  FPR=0.790%  AUC=0.99962  [OK]
+  [034/108]  nl=63 mcs=100 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.629%  FPR=0.706%  AUC=0.99959  [OK]
+  [035/108]  nl=63 mcs=100 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.581%  FPR=0.674%  AUC=0.99963  [OK]
+  [036/108]  nl=63 mcs=100 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.468%  FPR=0.790%  AUC=0.99962  [OK]
+  [037/108]  nl=127 mcs=20 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.516%  FPR=0.727%  AUC=0.99962  [OK]
+  [038/108]  nl=127 mcs=20 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99962  [OK]
+  [039/108]  nl=127 mcs=20 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.387%  FPR=0.801%  AUC=0.99963  [OK]
+  [040/108]  nl=127 mcs=20 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.516%  FPR=0.727%  AUC=0.99962  [OK]
+  [041/108]  nl=127 mcs=20 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99962  [OK]
+  [042/108]  nl=127 mcs=20 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.387%  FPR=0.801%  AUC=0.99963  [OK]
+  [043/108]  nl=127 mcs=20 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.674%  AUC=0.99962  [OK]
+  [044/108]  nl=127 mcs=20 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.516%  FPR=0.695%  AUC=0.99963  [OK]
+  [045/108]  nl=127 mcs=20 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.452%  FPR=0.790%  AUC=0.99961  [OK]
+  [046/108]  nl=127 mcs=20 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.674%  AUC=0.99962  [OK]
+  [047/108]  nl=127 mcs=20 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.516%  FPR=0.695%  AUC=0.99963  [OK]
+  [048/108]  nl=127 mcs=20 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.452%  FPR=0.790%  AUC=0.99961  [OK]
+  [049/108]  nl=127 mcs=50 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.549%  FPR=0.685%  AUC=0.99961  [OK]
+  [050/108]  nl=127 mcs=50 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99961  [OK]
+  [051/108]  nl=127 mcs=50 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.452%  FPR=0.790%  AUC=0.99962  [OK]
+  [052/108]  nl=127 mcs=50 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.549%  FPR=0.685%  AUC=0.99961  [OK]
+  [053/108]  nl=127 mcs=50 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99961  [OK]
+  [054/108]  nl=127 mcs=50 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.452%  FPR=0.790%  AUC=0.99962  [OK]
+  [055/108]  nl=127 mcs=50 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.549%  FPR=0.695%  AUC=0.99962  [OK]
+  [056/108]  nl=127 mcs=50 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.549%  FPR=0.717%  AUC=0.99960  [OK]
+  [057/108]  nl=127 mcs=50 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.452%  FPR=0.801%  AUC=0.99960  [OK]
+  [058/108]  nl=127 mcs=50 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.549%  FPR=0.695%  AUC=0.99962  [OK]
+  [059/108]  nl=127 mcs=50 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.549%  FPR=0.717%  AUC=0.99960  [OK]
+  [060/108]  nl=127 mcs=50 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.452%  FPR=0.801%  AUC=0.99960  [OK]
+  [061/108]  nl=127 mcs=100 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.695%  AUC=0.99960  [OK]
+  [062/108]  nl=127 mcs=100 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99961  [OK]
+  [063/108]  nl=127 mcs=100 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.484%  FPR=0.759%  AUC=0.99963  [OK]
+  [064/108]  nl=127 mcs=100 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.695%  AUC=0.99960  [OK]
+  [065/108]  nl=127 mcs=100 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.532%  FPR=0.738%  AUC=0.99961  [OK]
+  [066/108]  nl=127 mcs=100 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.484%  FPR=0.759%  AUC=0.99963  [OK]
+  [067/108]  nl=127 mcs=100 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.706%  AUC=0.99960  [OK]
+  [068/108]  nl=127 mcs=100 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.581%  FPR=0.685%  AUC=0.99961  [OK]
+  [069/108]  nl=127 mcs=100 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.484%  FPR=0.695%  AUC=0.99962  [OK]
+  [070/108]  nl=127 mcs=100 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.706%  AUC=0.99960  [OK]
+  [071/108]  nl=127 mcs=100 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.581%  FPR=0.685%  AUC=0.99961  [OK]
+  [072/108]  nl=127 mcs=100 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.484%  FPR=0.695%  AUC=0.99962  [OK]
+  [073/108]  nl=255 mcs=20 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.717%  AUC=0.99960  [OK]
+  [074/108]  nl=255 mcs=20 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.500%  FPR=0.759%  AUC=0.99961  [OK]
+  [075/108]  nl=255 mcs=20 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.387%  FPR=0.790%  AUC=0.99963  [OK]
+  [076/108]  nl=255 mcs=20 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.717%  AUC=0.99960  [OK]
+  [077/108]  nl=255 mcs=20 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.500%  FPR=0.759%  AUC=0.99961  [OK]
+  [078/108]  nl=255 mcs=20 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.387%  FPR=0.790%  AUC=0.99963  [OK]
+  [079/108]  nl=255 mcs=20 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.565%  FPR=0.685%  AUC=0.99961  [OK]
+  [080/108]  nl=255 mcs=20 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.565%  FPR=0.706%  AUC=0.99962  [OK]
+  [081/108]  nl=255 mcs=20 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.452%  FPR=0.790%  AUC=0.99962  [OK]
+  [082/108]  nl=255 mcs=20 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.565%  FPR=0.685%  AUC=0.99961  [OK]
+  [083/108]  nl=255 mcs=20 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.565%  FPR=0.706%  AUC=0.99962  [OK]
+  [084/108]  nl=255 mcs=20 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.452%  FPR=0.790%  AUC=0.99962  [OK]
+  [085/108]  nl=255 mcs=50 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.549%  FPR=0.717%  AUC=0.99960  [OK]
+  [086/108]  nl=255 mcs=50 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.484%  FPR=0.717%  AUC=0.99962  [OK]
+  [087/108]  nl=255 mcs=50 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.436%  FPR=0.801%  AUC=0.99961  [OK]
+  [088/108]  nl=255 mcs=50 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.549%  FPR=0.717%  AUC=0.99960  [OK]
+  [089/108]  nl=255 mcs=50 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.484%  FPR=0.717%  AUC=0.99962  [OK]
+  [090/108]  nl=255 mcs=50 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.436%  FPR=0.801%  AUC=0.99961  [OK]
+  [091/108]  nl=255 mcs=50 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.549%  FPR=0.738%  AUC=0.99961  [OK]
+  [092/108]  nl=255 mcs=50 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.565%  FPR=0.769%  AUC=0.99961  [OK]
+  [093/108]  nl=255 mcs=50 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.452%  FPR=0.832%  AUC=0.99961  [OK]
+  [094/108]  nl=255 mcs=50 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.549%  FPR=0.738%  AUC=0.99961  [OK]
+  [095/108]  nl=255 mcs=50 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.565%  FPR=0.769%  AUC=0.99961  [OK]
+  [096/108]  nl=255 mcs=50 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.452%  FPR=0.832%  AUC=0.99961  [OK]
+  [097/108]  nl=255 mcs=100 lr=0.02 ss=0.70 spw=1.5  |  FNR=0.581%  FPR=0.685%  AUC=0.99959  [OK]
+  [098/108]  nl=255 mcs=100 lr=0.02 ss=0.70 spw=2.0  |  FNR=0.549%  FPR=0.738%  AUC=0.99961  [OK]
+  [099/108]  nl=255 mcs=100 lr=0.02 ss=0.70 spw=3.0  |  FNR=0.468%  FPR=0.780%  AUC=0.99962  [OK]
+  [100/108]  nl=255 mcs=100 lr=0.02 ss=0.85 spw=1.5  |  FNR=0.581%  FPR=0.685%  AUC=0.99959  [OK]
+  [101/108]  nl=255 mcs=100 lr=0.02 ss=0.85 spw=2.0  |  FNR=0.549%  FPR=0.738%  AUC=0.99961  [OK]
+  [102/108]  nl=255 mcs=100 lr=0.02 ss=0.85 spw=3.0  |  FNR=0.468%  FPR=0.780%  AUC=0.99962  [OK]
+  [103/108]  nl=255 mcs=100 lr=0.05 ss=0.70 spw=1.5  |  FNR=0.581%  FPR=0.717%  AUC=0.99958  [OK]
+  [104/108]  nl=255 mcs=100 lr=0.05 ss=0.70 spw=2.0  |  FNR=0.549%  FPR=0.706%  AUC=0.99961  [OK]
+  [105/108]  nl=255 mcs=100 lr=0.05 ss=0.70 spw=3.0  |  FNR=0.387%  FPR=0.769%  AUC=0.99961  [OK]
+  [106/108]  nl=255 mcs=100 lr=0.05 ss=0.85 spw=1.5  |  FNR=0.581%  FPR=0.717%  AUC=0.99958  [OK]
+  [107/108]  nl=255 mcs=100 lr=0.05 ss=0.85 spw=2.0  |  FNR=0.549%  FPR=0.706%  AUC=0.99961  [OK]
+  [108/108]  nl=255 mcs=100 lr=0.05 ss=0.85 spw=3.0  |  FNR=0.387%  FPR=0.769%  AUC=0.99961  [OK]
+  
+  LightGBM grid search finished in 287.1s
+    [SAVED] lgbm_grid_results.csv  (108 rows)
+  
+  -- LightGBM Best Config -----------------------------------------
+    Params   : {'num_leaves': 127, 'min_child_samples': 20, 'learning_rate': 0.02, 'subsample': 0.7, 'scale_pos_weight': 3.0}
+    FNR      : 0.387%
+    FPR      : 0.801%
+    ROC-AUC  : 0.999632
+    F1       : 99.197%
+    CM       : TP=6174 TN=9414 FP=76 FN=24
+    [SAVED] tuned_lgbm.pkl
+
+------------------------------------------------------------------------
+  CatBoost Flagship  (hard parameter grid)
+------------------------------------------------------------------------
+  CatBoost 1.2.10 available.
+  Total CatBoost combinations : 54
+  Fixed: iterations=700, border_count=254, random_strength=1.5, od_wait=50
+
+  [001/54]  depth=6 l2=3 bt=0.5 lr=0.02  |  FNR=0.791%  FPR=1.117%  AUC=0.99927  [OK]
+  [002/54]  depth=6 l2=3 bt=0.5 lr=0.05  |  FNR=0.662%  FPR=0.864%  AUC=0.99946  [OK]
+  [003/54]  depth=6 l2=3 bt=1.0 lr=0.02  |  FNR=0.791%  FPR=1.117%  AUC=0.99927  [OK]
+  [004/54]  depth=6 l2=3 bt=1.0 lr=0.05  |  FNR=0.662%  FPR=0.864%  AUC=0.99946  [OK]
+  [005/54]  depth=6 l2=3 bt=2.0 lr=0.02  |  FNR=0.791%  FPR=1.117%  AUC=0.99927  [OK]
+  [006/54]  depth=6 l2=3 bt=2.0 lr=0.05  |  FNR=0.662%  FPR=0.864%  AUC=0.99946  [OK]
+  [007/54]  depth=6 l2=5 bt=0.5 lr=0.02  |  FNR=0.823%  FPR=1.096%  AUC=0.99923  [OK]
+  [008/54]  depth=6 l2=5 bt=0.5 lr=0.05  |  FNR=0.694%  FPR=0.938%  AUC=0.99941  [OK]
+  [009/54]  depth=6 l2=5 bt=1.0 lr=0.02  |  FNR=0.823%  FPR=1.096%  AUC=0.99923  [OK]
+  [010/54]  depth=6 l2=5 bt=1.0 lr=0.05  |  FNR=0.694%  FPR=0.938%  AUC=0.99941  [OK]
+  [011/54]  depth=6 l2=5 bt=2.0 lr=0.02  |  FNR=0.823%  FPR=1.096%  AUC=0.99923  [OK]
+  [012/54]  depth=6 l2=5 bt=2.0 lr=0.05  |  FNR=0.694%  FPR=0.938%  AUC=0.99941  [OK]
+  [013/54]  depth=6 l2=7 bt=0.5 lr=0.02  |  FNR=0.887%  FPR=1.128%  AUC=0.99920  [OK]
+  [014/54]  depth=6 l2=7 bt=0.5 lr=0.05  |  FNR=0.645%  FPR=0.969%  AUC=0.99939  [OK]
+  [015/54]  depth=6 l2=7 bt=1.0 lr=0.02  |  FNR=0.887%  FPR=1.128%  AUC=0.99920  [OK]
+  [016/54]  depth=6 l2=7 bt=1.0 lr=0.05  |  FNR=0.645%  FPR=0.969%  AUC=0.99939  [OK]
+  [017/54]  depth=6 l2=7 bt=2.0 lr=0.02  |  FNR=0.887%  FPR=1.128%  AUC=0.99920  [OK]
+  [018/54]  depth=6 l2=7 bt=2.0 lr=0.05  |  FNR=0.645%  FPR=0.969%  AUC=0.99939  [OK]
+  [019/54]  depth=8 l2=3 bt=0.5 lr=0.02  |  FNR=0.710%  FPR=0.938%  AUC=0.99943  [OK]
+  [020/54]  depth=8 l2=3 bt=0.5 lr=0.05  |  FNR=0.678%  FPR=0.832%  AUC=0.99945  [OK]
+  [021/54]  depth=8 l2=3 bt=1.0 lr=0.02  |  FNR=0.710%  FPR=0.938%  AUC=0.99943  [OK]
+  [022/54]  depth=8 l2=3 bt=1.0 lr=0.05  |  FNR=0.678%  FPR=0.832%  AUC=0.99945  [OK]
+  [023/54]  depth=8 l2=3 bt=2.0 lr=0.02  |  FNR=0.710%  FPR=0.938%  AUC=0.99943  [OK]
+  [024/54]  depth=8 l2=3 bt=2.0 lr=0.05  |  FNR=0.678%  FPR=0.832%  AUC=0.99945  [OK]
+  [025/54]  depth=8 l2=5 bt=0.5 lr=0.02  |  FNR=0.678%  FPR=0.980%  AUC=0.99940  [OK]
+  [026/54]  depth=8 l2=5 bt=0.5 lr=0.05  |  FNR=0.662%  FPR=0.917%  AUC=0.99942  [OK]
+  [027/54]  depth=8 l2=5 bt=1.0 lr=0.02  |  FNR=0.678%  FPR=0.980%  AUC=0.99940  [OK]
+  [028/54]  depth=8 l2=5 bt=1.0 lr=0.05  |  FNR=0.662%  FPR=0.917%  AUC=0.99942  [OK]
+  [029/54]  depth=8 l2=5 bt=2.0 lr=0.02  |  FNR=0.678%  FPR=0.980%  AUC=0.99940  [OK]
+  [030/54]  depth=8 l2=5 bt=2.0 lr=0.05  |  FNR=0.662%  FPR=0.917%  AUC=0.99942  [OK]
+  [031/54]  depth=8 l2=7 bt=0.5 lr=0.02  |  FNR=0.726%  FPR=1.033%  AUC=0.99934  [OK]
+  [032/54]  depth=8 l2=7 bt=0.5 lr=0.05  |  FNR=0.662%  FPR=0.875%  AUC=0.99948  [OK]
+  [033/54]  depth=8 l2=7 bt=1.0 lr=0.02  |  FNR=0.726%  FPR=1.033%  AUC=0.99934  [OK]
+  [034/54]  depth=8 l2=7 bt=1.0 lr=0.05  |  FNR=0.662%  FPR=0.875%  AUC=0.99948  [OK]
+  [035/54]  depth=8 l2=7 bt=2.0 lr=0.02  |  FNR=0.726%  FPR=1.033%  AUC=0.99934  [OK]
+  [036/54]  depth=8 l2=7 bt=2.0 lr=0.05  |  FNR=0.662%  FPR=0.875%  AUC=0.99948  [OK]
+  [037/54]  depth=10 l2=3 bt=0.5 lr=0.02  |  FNR=0.629%  FPR=0.832%  AUC=0.99952  [OK]
+  [038/54]  depth=10 l2=3 bt=0.5 lr=0.05  |  FNR=0.516%  FPR=0.727%  AUC=0.99951  [OK]
+  [039/54]  depth=10 l2=3 bt=1.0 lr=0.02  |  FNR=0.629%  FPR=0.832%  AUC=0.99952  [OK]
+  [040/54]  depth=10 l2=3 bt=1.0 lr=0.05  |  FNR=0.516%  FPR=0.727%  AUC=0.99951  [OK]
+  [041/54]  depth=10 l2=3 bt=2.0 lr=0.02  |  FNR=0.629%  FPR=0.832%  AUC=0.99952  [OK]
+  [042/54]  depth=10 l2=3 bt=2.0 lr=0.05  |  FNR=0.516%  FPR=0.727%  AUC=0.99951  [OK]
+  [043/54]  depth=10 l2=5 bt=0.5 lr=0.02  |  FNR=0.678%  FPR=0.854%  AUC=0.99950  [OK]
+  [044/54]  depth=10 l2=5 bt=0.5 lr=0.05  |  FNR=0.645%  FPR=0.801%  AUC=0.99951  [OK]
+  [045/54]  depth=10 l2=5 bt=1.0 lr=0.02  |  FNR=0.678%  FPR=0.854%  AUC=0.99950  [OK]
+  [046/54]  depth=10 l2=5 bt=1.0 lr=0.05  |  FNR=0.645%  FPR=0.801%  AUC=0.99951  [OK]
+  [047/54]  depth=10 l2=5 bt=2.0 lr=0.02  |  FNR=0.678%  FPR=0.854%  AUC=0.99950  [OK]
+  [048/54]  depth=10 l2=5 bt=2.0 lr=0.05  |  FNR=0.645%  FPR=0.801%  AUC=0.99951  [OK]
+  [049/54]  depth=10 l2=7 bt=0.5 lr=0.02  |  FNR=0.678%  FPR=0.854%  AUC=0.99948  [OK]
+  [050/54]  depth=10 l2=7 bt=0.5 lr=0.05  |  FNR=0.549%  FPR=0.759%  AUC=0.99952  [OK]
+  [051/54]  depth=10 l2=7 bt=1.0 lr=0.02  |  FNR=0.678%  FPR=0.854%  AUC=0.99948  [OK]
+  [052/54]  depth=10 l2=7 bt=1.0 lr=0.05  |  FNR=0.549%  FPR=0.759%  AUC=0.99952  [OK]
+  [053/54]  depth=10 l2=7 bt=2.0 lr=0.02  |  FNR=0.678%  FPR=0.854%  AUC=0.99948  [OK]
+  [054/54]  depth=10 l2=7 bt=2.0 lr=0.05  |  FNR=0.549%  FPR=0.759%  AUC=0.99952  [OK]
+  
+  CatBoost grid search finished in 1636.9s
+    [SAVED] cb_grid_results.csv  (54 rows)
+  
+  -- CatBoost Best Config -----------------------------------------
+    Params   : {'depth': 10, 'l2_leaf_reg': 3, 'bagging_temperature': 0.5, 'learning_rate': 0.05}
+    FNR      : 0.516%
+    FPR      : 0.727%
+    ROC-AUC  : 0.999508
+    F1       : 99.188%
+    CM       : TP=6166 TN=9421 FP=69 FN=32
+    [SAVED] tuned_catboost.pkl
+
+------------------------------------------------------------------------
+  FINAL COMPARISON TABLE  (Step 6 baselines  +  Step 7 tuned models)
+------------------------------------------------------------------------
+  Metric                    LogisticRegression     RandomForest          XGBoost    XGBoost_tuned   LightGBM_tuned   CatBoost_tuned
+  -------------------------------------------------------------------------------------------------------------------------------
+  accuracy                           97.380%          99.248%          99.363%          99.190%          99.363%          99.356%
+  precision                          96.333%          98.749%          98.956%          98.390%          98.784%          98.893%
+  recall                             97.064%          99.355%          99.435%          99.581%          99.613%          99.484%
+  f1                                 96.697%          99.051%          99.195%          98.982%          99.197%          99.188%
+  roc_auc                           0.994461         0.999488         0.999529         0.999477         0.999632         0.999508
+  fpr                                 2.413%           0.822%           0.685%           1.064%           0.801%           0.727%
+  fnr                                 2.936%           0.645%           0.565%           0.419%           0.387%           0.516%
+  infer_ms_per_sample                0.0005ms          0.0058ms          0.0009ms          0.0012ms          0.0063ms          0.0008ms
+  -------------------------------------------------------------------------------------------------------------------------------
+
+    FPR constraint : < 1.5%   (OK = feasible,  -- = violates)
+  FPR feasible                            --               OK               OK               OK               OK               OK
+
+------------------------------------------------------------------------
+  CHAMPION SELECTION  (lowest FNR with FPR < 1.5%)
+------------------------------------------------------------------------
+    CHAMPION  :  LightGBM_tuned
+    FNR       :  0.387%  (missed malware out of all malware)
+    FPR       :  0.801%  (false alarms out of all legit)
+    ROC-AUC   :  0.999632
+    F1        :  99.197%
+    Precision :  98.784%
+    Recall    :  99.613%
+    CM        :  TP=6174 TN=9414 FP=76 FN=24
+    Infer     :  0.0063 ms/sample
+  
+  [SAVED] tuned_best_model.pkl  (LightGBM_tuned)  ->  C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\tuned_best_model.pkl
+    [SAVED] tuned_best_params.json
+    [SAVED] tuned_val_metrics.json
+
+------------------------------------------------------------------------
+  PLOTS
+------------------------------------------------------------------------
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\07_tuned_roc_curves.png
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\08_tuned_confusion_matrices.png
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\10_fnr_fpr_scatter.png
+
+========================================================================
+  STEP 7 - HYPERPARAMETER TUNING + FLAGSHIP COMPARISON COMPLETE
+  Champion model : LightGBM_tuned
+  FNR            : 0.387%  (missed malware, primary objective)
+  FPR            : 0.801%  (constraint < 1.5%  PASSED)
+  ROC-AUC        : 0.999632
+
+  Grid artifacts :
+    xgb_grid_results.csv  |  lgbm_grid_results.csv  |  cb_grid_results.csv
+  Model artifacts:
+    tuned_xgb.pkl  |  tuned_lgbm.pkl  |  tuned_catboost.pkl
+    tuned_best_model.pkl  (LightGBM_tuned)
+  Plots:
+    07_tuned_roc_curves.png  |  08_tuned_confusion_matrices.png
+    09_xgb_grid_heatmap.png  |  10_fnr_fpr_scatter.png
+
+  NEXT STEPS:
+    Step 8  : Evaluate champion on HELD-OUT TEST SET (first time test touched)
+    Step 9  : Probability calibration + optimal threshold selection
+    Step 10 : SHAP explainability
+  Finished : 2026-09-18 12:28:03
+========================================================================

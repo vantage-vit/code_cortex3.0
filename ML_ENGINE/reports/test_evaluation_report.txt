@@ -1,0 +1,52 @@
+============================================================================
+  CODE CORTEX 3.0  -  STEP 8 : FINAL TEST SET EVALUATION REPORT
+  Generated : 2026-09-18 14:39:59
+============================================================================
+
+----------------------------------------------------------------------------
+  1. LOAD  -  Held-Out Test Set (First Time Unsealed)
+----------------------------------------------------------------------------
+  CHAMPION MODEL          : LightGBM_tuned
+  Optimal Hyperparameters  : {'num_leaves': 127, 'min_child_samples': 20, 'learning_rate': 0.02, 'subsample': 0.7, 'scale_pos_weight': 3.0}
+  Total Test Set Samples   : 15,689 PE binaries
+    - Actual Malware (0)   : 9,491 files (60.49%)
+    - Actual Legitimate (1): 6,198 files (39.51%)
+
+----------------------------------------------------------------------------
+  2. INFERENCE & OPERATING THRESHOLD EVALUATION
+----------------------------------------------------------------------------
+  TEST PERFORMANCE BREAKDOWN:
+  
+  [CHOSEN CHAMPION OPERATING POLICY: Threshold = 0.10]
+        - Malware Caught (Threats Blocked): 9,466 / 9,491 (99.737%)
+        - Missed Malware (Marked as Clean): 25 / 9,491 (0.263%)  <-- TARGET < 0.5% ACHIEVED!
+        - Clean Software Allowed          : 6,111 / 6,198 (98.596%)
+        - False Alarms (Clean as Malware) : 87 / 6,198 (1.404%)  <-- SAFE (< 1.5%)
+        - Overall Accuracy                : 99.286% (15,577 / 15,689)
+        - ROC-AUC                         : 0.999804
+        - PR-AUC                          : 0.999873
+        - Inference Speed                 : 0.0090 ms/sample (0.14s total)
+  
+  [BASELINE COMPARISON: Threshold = 0.50]
+        - Missed Malware                  : 57 / 9,491 (0.601%)
+        - False Alarms                    : 32 / 6,198 (0.516%)
+        - Overall Accuracy                : 99.433%
+        => By choosing 0.10: Missed malware reduced from 57 down to 25 (over 56% fewer breaches!)
+  
+  [SAVED] test_metrics.json -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\test_metrics.json
+
+----------------------------------------------------------------------------
+  3. PLOTS
+----------------------------------------------------------------------------
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\11_test_roc_pr_curves.png
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\12_test_confusion_matrix.png
+
+============================================================================
+  STEP 8 - TEST SET EVALUATION COMPLETE
+  CHAMPION MODEL     : LightGBM_tuned (Threshold = 0.10)
+  MALWARE DETECTED   : 9,466 / 9,491 (99.737%)
+  MALWARE MISSED     : 25 / 9,491 (0.263%)
+  CLEAN FILES ALLOWED: 6,111 / 6,198 (98.596%)
+  FALSE ALARMS       : 87 / 6,198 (1.404%)
+  OVERALL ACCURACY   : 99.286% (15,577 / 15,689)
+============================================================================

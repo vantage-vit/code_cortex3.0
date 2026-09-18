@@ -1,0 +1,107 @@
+========================================================================
+  CODE CORTEX 3.0  -  STEP 10 : SHAP EXPLAINABILITY
+  Started : 2026-09-18 12:40:37
+========================================================================
+
+------------------------------------------------------------------------
+  1. LOAD  -  Reading Model and Feature Sets
+------------------------------------------------------------------------
+  Champion Model : LightGBM_tuned
+  Features       : 47 locked attributes
+
+------------------------------------------------------------------------
+  2. SHAP TREE EXPLAINER INITIALISATION & COMPUTATION
+------------------------------------------------------------------------
+  TreeExplainer created in 1.82s
+  Computing SHAP values for 2,000 background validation samples...
+  SHAP computation completed in 7.12s  (3.56 ms/sample)
+
+------------------------------------------------------------------------
+  3. GLOBAL FEATURE IMPORTANCE (Mean |SHAP| Ranking)
+------------------------------------------------------------------------
+  Top 10 Global Features by Mean |SHAP Impact|:
+    #01  VersionInformationSize          Mean |SHAP| = 2.1476
+    #02  ImageBase                       Mean |SHAP| = 1.4435
+    #03  SectionsMaxEntropy              Mean |SHAP| = 1.2183
+    #04  MajorOperatingSystemVersion     Mean |SHAP| = 0.7328
+    #05  MajorLinkerVersion              Mean |SHAP| = 0.5056
+    #06  SizeOfStackReserve              Mean |SHAP| = 0.4658
+    #07  MajorSubsystemVersion           Mean |SHAP| = 0.4424
+    #08  Subsystem                       Mean |SHAP| = 0.3272
+    #09  Characteristics                 Mean |SHAP| = 0.2930
+    #10  CheckSum                        Mean |SHAP| = 0.2782
+  
+LOCKED TOP 5 GLOBAL MALWARE DRIVERS:
+    ★ Rank 1: VersionInformationSize  (Mean Impact: 2.1476)
+    ★ Rank 2: ImageBase  (Mean Impact: 1.4435)
+    ★ Rank 3: SectionsMaxEntropy  (Mean Impact: 1.2183)
+    ★ Rank 4: MajorOperatingSystemVersion  (Mean Impact: 0.7328)
+    ★ Rank 5: MajorLinkerVersion  (Mean Impact: 0.5056)
+  
+  [SAVED] top5_features.json -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\top5_features.json
+    [SAVED] shap_explainer.pkl -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\shap_explainer.pkl
+
+------------------------------------------------------------------------
+  4. LOCAL SAMPLE EXPLANATIONS (Demonstrating Target JSON Contract)
+------------------------------------------------------------------------
+  Sample 1: True Malware Sample Explanation:
+    [
+  {
+    "feature": "VersionInformationSize",
+    "impact": 1.9233
+  },
+  {
+    "feature": "SectionsMaxEntropy",
+    "impact": 1.5405
+  },
+  {
+    "feature": "ImageBase",
+    "impact": -1.493
+  },
+  {
+    "feature": "SizeOfStackReserve",
+    "impact": 0.6018
+  },
+  {
+    "feature": "CheckSum",
+    "impact": -0.5642
+  }
+]
+  
+Sample 2: True Legitimate Sample Explanation:
+    [
+  {
+    "feature": "VersionInformationSize",
+    "impact": -2.2624
+  },
+  {
+    "feature": "MajorOperatingSystemVersion",
+    "impact": -1.3809
+  },
+  {
+    "feature": "SectionsMaxEntropy",
+    "impact": -1.3033
+  },
+  {
+    "feature": "Subsystem",
+    "impact": -1.0989
+  },
+  {
+    "feature": "MajorSubsystemVersion",
+    "impact": -0.9395
+  }
+]
+
+------------------------------------------------------------------------
+  5. VISUALISATIONS  -  Generating SHAP Summary Plots
+------------------------------------------------------------------------
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\15_shap_summary_bar.png
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\16_shap_beeswarm.png
+
+========================================================================
+  STEP 10 - SHAP EXPLAINABILITY COMPLETE
+  Top 5 Locked Drivers: VersionInformationSize, ImageBase, SectionsMaxEntropy, MajorOperatingSystemVersion, MajorLinkerVersion
+  Explainer Serialised: shap_explainer.pkl (Ready for Step 14 predict.py)
+  Reports & Artifacts : explainability_report.txt  |  top5_features.json
+  Plots Generated     : 15_shap_summary_bar.png  |  16_shap_beeswarm.png
+========================================================================
