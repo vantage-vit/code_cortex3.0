@@ -448,6 +448,184 @@ def extract_features(
     return output
 
 
+def check_authenticode(pe_path: str) -> Dict[str, Any]:
+    """
+    Check the PE file's Authenticode digital signature using the
+    IMAGE_DIRECTORY_ENTRY_SECURITY directory.
+
+    If the signature is present and verified by a trusted root/vendor via
+    WinVerifyTrust, returns trusted=True and vendor information.
+    """
+    if not os.path.isfile(pe_path):
+        raise FileNotFoundError(f"PE file not found: {pe_path}")
+
+    try:
+        pe = pefile.PE(pe_path, fast_load=True)
+        pe.parse_data_directories(directories=[
+            pefile.DIRECTORY_ENTRY["IMAGE_DIRECTORY_ENTRY_SECURITY"]
+        ])
+        sec_dir = pe.OPTIONAL_HEADER.DATA_DIRECTORY[
+            pefile.DIRECTORY_ENTRY["IMAGE_DIRECTORY_ENTRY_SECURITY"]
+        ]
+        has_security_entry = bool(sec_dir.VirtualAddress > 0 and sec_dir.Size > 0)
+        pe.close()
+    except Exception as exc:
+        return {
+            "signed": False,
+            "valid": False,
+            "trusted": False,
+            "vendor": None,
+            "details": f"PE header parse error: {exc}"
+        }
+
+    if not has_security_entry:
+        return {
+            "signed": False,
+            "valid": False,
+            "trusted": False,
+            "vendor": None,
+            "details": "No Authenticode signature (IMAGE_DIRECTORY_ENTRY_SECURITY empty)"
+        }
+
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            from ctypes import wintypes
+
+            wintrust = ctypes.windll.wintrust
+            crypt32 = ctypes.windll.crypt32
+
+            class GUID(ctypes.Structure):
+                _fields_ = [
+                    ('Data1', wintypes.DWORD),
+                    ('Data2', wintypes.WORD),
+                    ('Data3', wintypes.WORD),
+                    ('Data4', wintypes.BYTE * 8)
+                ]
+                def __init__(self, guid_str):
+                    super().__init__()
+                    ctypes.windll.ole32.CLSIDFromString(ctypes.c_wchar_p(guid_str), ctypes.byref(self))
+
+            class WINTRUST_FILE_INFO(ctypes.Structure):
+                _fields_ = [
+                    ('cbStruct', wintypes.DWORD),
+                    ('pcwszFilePath', wintypes.LPCWSTR),
+                    ('hFile', wintypes.HANDLE),
+                    ('pgKnownSubject', ctypes.c_void_p),
+                ]
+
+            class WINTRUST_DATA(ctypes.Structure):
+                _fields_ = [
+                    ('cbStruct', wintypes.DWORD),
+                    ('pPolicyCallbackData', ctypes.c_void_p),
+                    ('pSIPClientData', ctypes.c_void_p),
+                    ('dwUIChoice', wintypes.DWORD),
+                    ('fdwRevocationChecks', wintypes.DWORD),
+                    ('dwUnionChoice', wintypes.DWORD),
+                    ('pFile', ctypes.POINTER(WINTRUST_FILE_INFO)),
+                    ('dwStateAction', wintypes.DWORD),
+                    ('hWVTStateData', wintypes.HANDLE),
+                    ('pwszURLReference', wintypes.LPCWSTR),
+                    ('dwProvFlags', wintypes.DWORD),
+                    ('dwUIContext', wintypes.DWORD),
+                    ('pSignatureSettings', ctypes.c_void_p),
+                ]
+
+            file_info = WINTRUST_FILE_INFO()
+            file_info.cbStruct = ctypes.sizeof(WINTRUST_FILE_INFO)
+            file_info.pcwszFilePath = os.path.abspath(pe_path)
+
+            guid = GUID("{00AAC56B-CD44-11d0-8CC2-00C04FC295EE}")
+
+            wt_data = WINTRUST_DATA()
+            wt_data.cbStruct = ctypes.sizeof(WINTRUST_DATA)
+            wt_data.dwUIChoice = 2  # WTD_UI_NONE
+            wt_data.fdwRevocationChecks = 0  # WTD_REVOKE_NONE
+            wt_data.dwUnionChoice = 1  # WTD_CHOICE_FILE
+            wt_data.pFile = ctypes.pointer(file_info)
+            wt_data.dwProvFlags = 0x00000040  # WTD_CACHE_ONLY_URL_RETRIEVAL
+
+            wvt_status = wintrust.WinVerifyTrust(None, ctypes.byref(guid), ctypes.byref(wt_data))
+            is_valid = (wvt_status == 0)
+
+            # Query certificate subject name(s)
+            crypt32.CryptQueryObject.restype = wintypes.BOOL
+            crypt32.CryptQueryObject.argtypes = [
+                wintypes.DWORD, ctypes.c_void_p, wintypes.DWORD, wintypes.DWORD,
+                wintypes.DWORD, ctypes.POINTER(wintypes.DWORD), ctypes.POINTER(wintypes.DWORD),
+                ctypes.POINTER(wintypes.DWORD), ctypes.POINTER(wintypes.HANDLE),
+                ctypes.POINTER(wintypes.HANDLE), ctypes.POINTER(ctypes.c_void_p)
+            ]
+            crypt32.CertEnumCertificatesInStore.restype = ctypes.c_void_p
+            crypt32.CertEnumCertificatesInStore.argtypes = [wintypes.HANDLE, ctypes.c_void_p]
+            crypt32.CertGetNameStringW.restype = wintypes.DWORD
+            crypt32.CertGetNameStringW.argtypes = [
+                ctypes.c_void_p, wintypes.DWORD, wintypes.DWORD, ctypes.c_void_p, wintypes.LPWSTR, wintypes.DWORD
+            ]
+            crypt32.CertCloseStore.restype = wintypes.BOOL
+            crypt32.CertCloseStore.argtypes = [wintypes.HANDLE, wintypes.DWORD]
+
+            pdwMsgAndCertEncodingType = wintypes.DWORD()
+            pdwContentType = wintypes.DWORD()
+            pdwFormatType = wintypes.DWORD()
+            phCertStore = wintypes.HANDLE()
+            phMsg = wintypes.HANDLE()
+            ppvContext = ctypes.c_void_p()
+
+            cert_names = []
+            res = crypt32.CryptQueryObject(
+                1,  # CERT_QUERY_OBJECT_FILE
+                ctypes.c_wchar_p(os.path.abspath(pe_path)),
+                1 << 10,  # CERT_QUERY_CONTENT_FLAG_PKCS7_SIGNED_EMBED
+                1 << 1,   # CERT_QUERY_FORMAT_FLAG_BINARY
+                0,
+                ctypes.byref(pdwMsgAndCertEncodingType),
+                ctypes.byref(pdwContentType),
+                ctypes.byref(pdwFormatType),
+                ctypes.byref(phCertStore),
+                ctypes.byref(phMsg),
+                ctypes.byref(ppvContext)
+            )
+
+            if res and phCertStore.value:
+                pCert = crypt32.CertEnumCertificatesInStore(phCertStore, None)
+                buf = ctypes.create_unicode_buffer(512)
+                while pCert:
+                    crypt32.CertGetNameStringW(pCert, 4, 0, None, buf, 512)
+                    if buf.value:
+                        cert_names.append(buf.value)
+                    pCert = crypt32.CertEnumCertificatesInStore(phCertStore, pCert)
+                crypt32.CertCloseStore(phCertStore, 0)
+
+            vendor = cert_names[-1] if cert_names else (cert_names[0] if cert_names else "Verified Vendor")
+            is_trusted = is_valid
+
+            return {
+                "signed": True,
+                "valid": is_valid,
+                "trusted": is_trusted,
+                "vendor": vendor if is_trusted else None,
+                "certificates": cert_names,
+                "details": f"Authenticode status: valid={is_valid}, trusted={is_trusted}, vendor='{vendor}'"
+            }
+        except Exception as err:
+            return {
+                "signed": True,
+                "valid": False,
+                "trusted": False,
+                "vendor": None,
+                "details": f"Signature verification error: {err}"
+            }
+
+    return {
+        "signed": True,
+        "valid": False,
+        "trusted": False,
+        "vendor": None,
+        "details": "Non-Windows environment"
+    }
+
+
 def extract_features_for_scaler(pe_path: str) -> Dict[str, float]:
     """
     Extract ALL 55 features the scaler expects (50 raw + 5 derived).
