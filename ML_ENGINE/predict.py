@@ -124,7 +124,11 @@ class MalwarePredictor:
         if os.path.exists(shap_path):
             try:
                 with open(shap_path, "rb") as f:
-                    self.explainer = pickle.load(f)
+                    loaded_shap = pickle.load(f)
+                    if isinstance(loaded_shap, dict) and "explainer" in loaded_shap:
+                        self.explainer = loaded_shap["explainer"]
+                    else:
+                        self.explainer = loaded_shap
             except Exception:
                 self.explainer = None
 
@@ -227,17 +231,18 @@ class MalwarePredictor:
             }
 
             if shap_values_matrix is not None:
-                # Extract top 5 risk contributors
-                sample_shap = shap_values_matrix[i]
-                sorted_indices = np.argsort(-np.abs(sample_shap))[:5]
+                # In binary LGBM, SHAP values are for class 1 (Legitimate).
+                # To represent risk/malware attribution, invert sign so +impact means MALWARE.
+                malware_shap = -shap_values_matrix[i]
+                sorted_indices = np.argsort(-np.abs(malware_shap))[:5]
                 top_factors = []
                 for idx in sorted_indices:
                     fname = self.model_feature_names[idx]
                     top_factors.append({
                         "feature": fname,
                         "value": float(df_raw.iloc[i][fname]),
-                        "impact": round(float(sample_shap[idx]), 4),
-                        "indicates": "MALWARE" if sample_shap[idx] > 0 else "BENIGN"
+                        "impact": round(float(malware_shap[idx]), 4),
+                        "indicates": "MALWARE" if malware_shap[idx] > 0 else "BENIGN"
                     })
                 rec["top_risk_factors"] = top_factors
 
