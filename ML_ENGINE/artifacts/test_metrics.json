@@ -1,0 +1,26 @@
+{
+  "champion_model": "LightGBM_tuned",
+  "selected_threshold": 0.1,
+  "total_test_samples": 15689,
+  "actual_malware_count": 9491,
+  "actual_legitimate_count": 6198,
+  "operating_policy_010": {
+    "caught_malware": 9466,
+    "missed_malware": 25,
+    "missed_malware_pct": 0.263,
+    "clean_allowed": 6111,
+    "false_alarms": 87,
+    "false_alarm_pct": 1.404,
+    "overall_accuracy_pct": 99.286
+  },
+  "baseline_050": {
+    "missed_malware": 57,
+    "missed_malware_pct": 0.601,
+    "false_alarms": 32,
+    "false_alarm_pct": 0.516,
+    "overall_accuracy_pct": 99.433
+  },
+  "roc_auc": 0.999804,
+  "pr_auc": 0.999873,
+  "infer_ms_per_sample": 0.009
+}
