@@ -1,0 +1,168 @@
+========================================================================
+  CODE CORTEX 3.0  -  STEPS 3-4-5 : SPLIT / PREPROCESS / FEATURE ENG.
+  Started : 2026-09-18 11:17:02
+========================================================================
+
+------------------------------------------------------------------------
+  LOAD  -  Reading processed_malware.csv + labels.csv
+------------------------------------------------------------------------
+  Loaded : 104,589 rows x 54 features
+  Labels : 104,589  (0=malware 63,271 | 1=legit 41,318)
+
+------------------------------------------------------------------------
+  STEP 5a  -  DERIVED FEATURE CREATION  (pre-split, no fitting)
+------------------------------------------------------------------------
+  Derived features added : 5
+      + entropy_range
+      + import_density
+      + resource_entropy_spread
+      + code_to_image_ratio
+      + section_fill_ratio
+  Total features now     : 59
+
+------------------------------------------------------------------------
+  STEP 3  -  STRATIFIED SPLIT  70 / 15 / 15
+------------------------------------------------------------------------
+    Total  : 104,589 samples
+    Train  : 73,212  (70.0%)  |  Malware 44,290  Legit 28,922
+    Val    : 15,688  (15.0%)  |  Malware 9,490  Legit 6,198
+    Test   : 15,689  (15.0%)  |  Malware 9,491  Legit 6,198
+      Train class %  ->  Malware 60.5%  |  Legit 39.5%
+      Val class %  ->  Malware 60.5%  |  Legit 39.5%
+      Test class %  ->  Malware 60.5%  |  Legit 39.5%
+    [SAVED] split_indices.json -> ml/artifacts/
+
+------------------------------------------------------------------------
+  STEP 5b  -  NEAR-CONSTANT FEATURE REMOVAL  (threshold: 95%)
+------------------------------------------------------------------------
+    DROP 'SizeOfHeapReserve'  -> top value covers 97.3% of training set
+    DROP 'SizeOfHeapCommit'  -> top value covers 98.1% of training set
+    DROP 'LoaderFlags'  -> top value covers 100.0% of training set
+    DROP 'NumberOfRvaAndSizes'  -> top value covers 99.9% of training set
+    Features remaining : 55
+
+------------------------------------------------------------------------
+  STEP 4  -  STANDARD SCALER  (fit on train, transform val+test)
+------------------------------------------------------------------------
+    Scaler fit on X_train  (73,212 rows)
+    Transformed X_val      (15,688 rows)
+    Transformed X_test     (15,689 rows)
+    All features now have mean~0, std~1  (train-derived statistics).
+    [SAVED] preprocessor.pkl -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\preprocessor.pkl
+
+------------------------------------------------------------------------
+  STEP 5c  -  HIGH-CORRELATION FEATURE DROP  (threshold |r| > 0.95)
+------------------------------------------------------------------------
+    Pairs above threshold (8):
+    Kept                                Dropped                                    r
+    ----------------------------------------------------------------------------------
+    Machine                             SizeOfOptionalHeader                  0.9964
+    BaseOfCode                          SizeOfCode                            0.9796
+    MinorImageVersion                   MajorImageVersion                     0.9980
+    SectionMaxRawsize                   SectionsMeanRawsize                   0.9527
+    SectionsMinVirtualsize              SectionsMinRawsize                    0.9991
+    SectionMaxVirtualsize               SectionsMeanVirtualsize               0.9932
+    import_density                      ImportsNb                             0.9530
+    code_to_image_ratio                 BaseOfCode                            0.9887
+  
+  Features removed : 8
+      ['SizeOfOptionalHeader', 'ImportsNb', 'SectionsMinRawsize', 'SectionsMeanRawsize', 'SectionsMeanVirtualsize', 'SizeOfCode', 'MajorImageVersion', 'BaseOfCode']
+    Features remaining : 47
+
+------------------------------------------------------------------------
+  STEP 5d  -  LOCK FINAL FEATURE LIST
+------------------------------------------------------------------------
+    Final feature count : 47
+    Original (post-clean): 54
+    + Derived features   : 5
+    - Near-constant      : 4
+    - High-corr drops    : 8
+    = Final              : 47
+  
+    Final feature list:
+        1. Machine
+        2. Characteristics
+        3. MajorLinkerVersion
+        4. MinorLinkerVersion
+        5. SizeOfInitializedData
+        6. SizeOfUninitializedData
+        7. AddressOfEntryPoint
+        8. BaseOfData
+        9. ImageBase
+       10. SectionAlignment
+       11. FileAlignment
+       12. MajorOperatingSystemVersion
+       13. MinorOperatingSystemVersion
+       14. MinorImageVersion
+       15. MajorSubsystemVersion
+       16. MinorSubsystemVersion
+       17. SizeOfImage
+       18. SizeOfHeaders
+       19. CheckSum
+       20. Subsystem
+       21. DllCharacteristics
+       22. SizeOfStackReserve
+       23. SizeOfStackCommit
+       24. SectionsNb
+       25. SectionsMeanEntropy
+       26. SectionsMinEntropy
+       27. SectionsMaxEntropy
+       28. SectionMaxRawsize
+       29. SectionsMinVirtualsize
+       30. SectionMaxVirtualsize
+       31. ImportsNbDLL
+       32. ImportsNbOrdinal
+       33. ExportNb
+       34. ResourcesNb
+       35. ResourcesMeanEntropy
+       36. ResourcesMinEntropy
+       37. ResourcesMaxEntropy
+       38. ResourcesMeanSize
+       39. ResourcesMinSize
+       40. ResourcesMaxSize
+       41. LoadConfigurationSize
+       42. VersionInformationSize
+       43. entropy_range
+       44. import_density
+       45. resource_entropy_spread
+       46. code_to_image_ratio
+       47. section_fill_ratio
+  
+  [SAVED] feature_columns.json -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\feature_columns.json
+    [SAVED] dropped_features.json -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\dropped_features.json
+
+------------------------------------------------------------------------
+  SAVE  -  Writing train / val / test CSVs
+------------------------------------------------------------------------
+    X_train.csv   -> 73,212 rows x 47 cols
+    X_val.csv   -> 15,688 rows x 47 cols
+    X_test.csv   -> 15,689 rows x 47 cols
+    y_train.csv   -> 73,212 rows x 1 cols
+    y_val.csv   -> 15,688 rows x 1 cols
+    y_test.csv   -> 15,689 rows x 1 cols
+
+========================================================================
+  STEPS 3-4-5  COMPLETE  -  FINAL SUMMARY
+========================================================================
+    Rows (total)       : 104,589
+    Train              : 73,212  (70%)
+    Val                : 15,688  (15%)
+    Test               : 15,689  (15%)
+    Original features  : 54
+    + Derived features : 5
+    - Near-constant    : 4
+    - High-corr drops  : 8
+    = FINAL features   : 47
+    Artifacts saved:
+        ml/artifacts/X_train.csv
+        ml/artifacts/X_val.csv
+        ml/artifacts/X_test.csv
+        ml/artifacts/y_train.csv
+        ml/artifacts/y_val.csv
+        ml/artifacts/y_test.csv
+        ml/artifacts/preprocessor.pkl
+        ml/artifacts/feature_columns.json
+        ml/artifacts/dropped_features.json
+        ml/artifacts/split_indices.json
+    Finished : 2026-09-18 11:17:08
+========================================================================

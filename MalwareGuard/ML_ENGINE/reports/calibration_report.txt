@@ -1,0 +1,75 @@
+==========================================================================
+  CODE CORTEX 3.0  -  STEP 9 : PROBABILITY CALIBRATION & THRESHOLD REPORT
+  Generated : 2026-09-18 14:42:02
+==========================================================================
+
+--------------------------------------------------------------------------
+  1. LOAD  -  Reading Datasets and Champion Model
+--------------------------------------------------------------------------
+  Champion Model : LightGBM_tuned
+  Validation Set : 15,688 samples (Fit calibrator & sweep thresholds)
+  Test Set       : 15,689 samples (Held-out final verification)
+
+--------------------------------------------------------------------------
+  2. PROBABILITY CALIBRATION ON P(MALWARE)
+--------------------------------------------------------------------------
+  Raw Model Brier Score Loss : 0.005245  (lower is better)
+  Platt Sigmoid Brier Score  : 0.005540
+  Isotonic Brier Score       : 0.004788
+  
+  CHOSEN CALIBRATOR: [ISOTONIC] (Brier Loss = 0.004788)
+    Calibration Quality Improvement: +8.71%
+    [SAVED] calibrated_model.pkl -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\calibrated_model.pkl
+
+--------------------------------------------------------------------------
+  3. THRESHOLD SELECTION  (Evaluating Security Profiles on Validation Set)
+--------------------------------------------------------------------------
+  OPERATIONAL THRESHOLD PROFILES (Validation Set):
+    [Profile A - Primary Objective: High Detection (Min FNR | FPR < 1.5%)]
+        Threshold          : 0.1900
+        Missed Malware Rate: 0.369% (35 missed out of 9,490)
+        False Alarm Rate   : 1.388% (86 alarms out of 6,198)
+        Overall Accuracy   : 99.229%
+  
+  [Profile B - Balanced: Max F1-Score]
+        Threshold          : 0.4900
+        Missed Malware Rate: 0.706%
+        False Alarm Rate   : 0.484%
+        F1-Score           : 99.488%
+  
+  [Profile C - Strict: Ultra-Low Noise (FPR < 0.5%)]
+        Threshold          : 0.4200
+        False Alarm Rate   : 0.484%
+        Missed Malware Rate: 0.706%
+  
+  => LOCKED PRIMARY OPERATING THRESHOLD: 0.1000 (Aggressive Policy)
+
+--------------------------------------------------------------------------
+  4. HELD-OUT TEST SET VERIFICATION AT LOCKED THRESHOLD
+--------------------------------------------------------------------------
+  TEST SET FINAL RESULTS AT THRESHOLD 0.1000:
+      - Caught Malware       : 9,482 / 9,491 (99.905%)
+      - Missed Malware       : 9 / 9,491 (0.095%)
+      - Clean Files Allowed  : 5,949 / 6,198 (95.983%)
+      - False Alarms         : 249 / 6,198 (4.017%)
+      - Test Overall Accuracy: 98.356% (15,431 / 15,689)
+      - Test Brier Score     : 0.004523
+  
+  [SAVED] threshold_config.json -> C:\Users\lavan\Downloads\code_cortex3.0\ml\artifacts\threshold_config.json
+
+--------------------------------------------------------------------------
+  5. PLOTS
+--------------------------------------------------------------------------
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\13_calibration_curve.png
+    [PLOT] -> C:\Users\lavan\Downloads\code_cortex3.0\ml\plots\14_threshold_tradeoff_curve.png
+
+==========================================================================
+  STEP 9 - PROBABILITY CALIBRATION & THRESHOLD SELECTION COMPLETE
+  Winning Calibrator       : ISOTONIC (Brier Score = 0.004788)
+  Locked Primary Threshold : 0.1000
+  Test Caught Malware      : 9,482 / 9,491 (99.905%)
+  Test Missed Malware      : 9 / 9,491 (0.095%)
+  Test Clean Files Allowed : 5,949 / 6,198 (95.983%)
+  Test False Alarms        : 249 / 6,198 (4.017%)
+  Test Accuracy            : 98.356%
+==========================================================================
