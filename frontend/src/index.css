@@ -1,25 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0c12;
-  --color-surface: #12141c;
-  --color-surface-2: #171a24;
-  --color-border: #262a38;
-  --color-border-strong: #333849;
+  --color-bg: #0b0d10;
+  --color-surface: #12151a;
+  --color-surface-2: #181c22;
+  --color-surface-3: #0e1116;
+  --color-border: #23272e;
+  --color-border-strong: #2a2f38;
 
-  --color-accent: #34d399;
-  --color-accent-dim: #1c4a3a;
+  --color-accent: #39c99a;
+  --color-accent-light: #4fd1ae;
+  --color-accent-dim: #123a2c;
 
-  --color-danger: #f87171;
-  --color-danger-dim: #3a1f24;
+  --color-danger: #ef5350;
+  --color-danger-dim: #3a1414;
 
-  --color-warning: #fb923c;
+  --color-warning: #f5a623;
+  --color-warning-dim: #3a2313;
 
-  --color-text: #f4f5f7;
-  --color-text-muted: #8b90a0;
+  --color-gold: #f2c94c;
+
+  --color-info: #5b8def;
+  --color-info-dim: #122040;
+
+  --color-purple: #a78bfa;
+  --color-purple-dim: #2a1c40;
+
+  --color-text: #eef0f2;
+  --color-text-muted: #8a919c;
   --color-text-subtle: #5c6274;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
 }
 
 html,

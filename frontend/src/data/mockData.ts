@@ -1,4 +1,10 @@
-import type { AnalysisResult, HistoryEntry } from "../types";
+import type {
+  AnalysisResult,
+  HistoryEntry,
+  RiskBreakdownSlice,
+  ThreatDistributionSlice,
+  TopTargetedFile,
+} from "../types";
 
 export const sampleFiles = ["memtest.exe", "setup.exe", "DW20.EXE"];
 
@@ -70,14 +76,46 @@ export const mockAnalysisResults: Record<string, AnalysisResult> = {
 
 export const historyStats = {
   totalAnalyses: 1284,
+  totalAnalysesTrend: "+12.4%",
   maliciousDetected: 437,
+  maliciousTrend: "+8.1%",
   benign: 847,
+  benignTrend: "-3.2%",
+  avgConfidence: 91.4,
+  avgConfidenceTrend: "+2.6%",
 };
 
 export const historyEntries: HistoryEntry[] = [
-  { fileName: "memtest.exe", verdict: "MALICIOUS", confidence: 94.7, risk: "CRITICAL", time: "10:42" },
-  { fileName: "setup.exe", verdict: "BENIGN", confidence: 98.1, risk: "LOW", time: "10:45" },
-  { fileName: "DW20.EXE", verdict: "MALICIOUS", confidence: 88.3, risk: "HIGH", time: "10:49" },
-  { fileName: "ose.exe", verdict: "BENIGN", confidence: 96.5, risk: "LOW", time: "10:52" },
-  { fileName: "installer_x64.exe", verdict: "MALICIOUS", confidence: 76.2, risk: "MEDIUM", time: "10:58" },
+  { fileName: "memtest.exe", verdict: "MALICIOUS", confidence: 94.7, risk: "CRITICAL", time: "10:42", action: "Isolated in sandbox" },
+  { fileName: "setup.exe", verdict: "BENIGN", confidence: 98.1, risk: "LOW", time: "10:45", action: "Cleared for release" },
+  { fileName: "DW20.EXE", verdict: "MALICIOUS", confidence: 88.3, risk: "HIGH", time: "10:49", action: "Queued for deep scan" },
+  { fileName: "ose.exe", verdict: "BENIGN", confidence: 96.5, risk: "LOW", time: "10:52", action: "Archived to baseline" },
+  { fileName: "installer_x64.exe", verdict: "MALICIOUS", confidence: 76.2, risk: "MEDIUM", time: "10:58", action: "Analyst review requested" },
+];
+
+export const threatDistribution: ThreatDistributionSlice[] = [
+  { label: "Malware", pct: 32, color: "var(--color-warning)" },
+  { label: "Phishing", pct: 23, color: "var(--color-info)" },
+  { label: "Ransomware", pct: 20, color: "var(--color-danger)" },
+  { label: "Trojan", pct: 16, color: "var(--color-purple)" },
+  { label: "Spyware", pct: 9, color: "var(--color-accent-light)" },
+];
+
+export const riskBreakdown: RiskBreakdownSlice[] = [
+  { level: "CRITICAL", count: 128, color: "var(--color-danger)" },
+  { level: "HIGH", count: 184, color: "var(--color-warning)" },
+  { level: "MEDIUM", count: 211, color: "var(--color-gold)" },
+  { level: "LOW", count: 761, color: "var(--color-accent-light)" },
+];
+
+export const responseStats = {
+  avgResponse: "4m 12s",
+  escalations: 19,
+};
+
+export const topTargetedFiles: TopTargetedFile[] = [
+  { fileName: "memtest.exe", confidence: 94.7, color: "var(--color-warning)" },
+  { fileName: "installer_x64.exe", confidence: 76.2, color: "var(--color-danger)" },
+  { fileName: "DW20.EXE", confidence: 88.3, color: "var(--color-gold)" },
+  { fileName: "setup.exe", confidence: 98.1, color: "var(--color-accent-light)" },
 ];

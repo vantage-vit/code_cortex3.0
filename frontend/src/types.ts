@@ -31,4 +31,23 @@ export interface HistoryEntry {
   confidence: number;
   risk: RiskLevel;
   time: string;
+  action: string;
+}
+
+export interface ThreatDistributionSlice {
+  label: string;
+  pct: number;
+  color: string;
+}
+
+export interface RiskBreakdownSlice {
+  level: RiskLevel;
+  count: number;
+  color: string;
+}
+
+export interface TopTargetedFile {
+  fileName: string;
+  confidence: number;
+  color: string;
 }
